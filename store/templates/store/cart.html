@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box-element">
+
+                <a class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190; 買い物を続ける</a>
+
+            <br>
+            <br>
+            <table class="table">
+                <tr>
+                    <th><h5>個数: <strong>{{order.get_cart_items}}</strong></h5></th>
+                    <th><h5>合計: <strong>{{order.get_cart_total}}円</strong></h5></th>
+                    <th>
+                        <a style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">購入する</a>
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <br>    
+            <div class="box-element">
+                <div class="cart-row">
+                    <div style="flex:2"></div>
+                    <div style="flex:2"><strong>商品</strong></div>
+                    <div style="flex:1"><strong>値段</strong></div>
+                    <div style="flex:1"><strong>個数</strong></div>
+                    <div style="flex:1"><strong>合計</strong></div>
+                </div>
+
+                {% for item in items %}
+                <div class="cart-row">
+                    <div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
+                    <div style="flex:2"><p>{{item.product.name}}</p></div>
+                    <div style="flex:1"><p>{{item.product.price}}円</p></div>
+                    <div style="flex:1">
+                        <p class="quantity">{{item.quantity}}</p>
+                        <div class="quantity">
+                            <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
+                    
+                            <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
+                        </div>
+                    </div>
+                    <div style="flex:1"><p>{{item.get_total}}円</p></div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
